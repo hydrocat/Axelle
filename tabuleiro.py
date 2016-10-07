@@ -4,7 +4,7 @@ class Tabuleiro:
     def __init__ ( self, estado_inicial=[[1,2,3],[4,5,6],[7,8,0]] ):
         self.estado = estado_inicial
 
-    def gerarEstados(self):
+    def filhos(self):
         lista = sum(self.estado, [] )
         """Metodo do Tabareu"""
         p = lista.index(0)
@@ -37,8 +37,11 @@ class Tabuleiro:
 
         return resultado
 
-    def __str__(self):
-        string = ''
-        for linha in estado:
+    def __repr__(self):
+        string = '\n'
+        for linha in self.estado:
             string = string + str(linha) + '\n'
         return string
+
+    def __eq__(self,other):
+        return self.estado == other
