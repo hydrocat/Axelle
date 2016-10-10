@@ -42,10 +42,10 @@ class test_heuristicas(unittest.TestCase):
         self.assertEqual( 2, pecas_fora_lugar(self.tb_test2)  )
 
     def test_distancia_manhattan(self):
-        self.assertEqual(14, distancia_manhattan(self.tb_test))
+        self.assertEqual(10, distancia_manhattan(self.tb_test))
 
     def test_distancia_manhattan2(self):
-        self.assertEqual(2, distancia_manhattan(self.tb_test2))
+        self.assertEqual(1, distancia_manhattan(self.tb_test2))
 
 class test_algoritmo( unittest.TestCase ):
     def setUp(self):
