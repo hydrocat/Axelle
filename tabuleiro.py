@@ -1,4 +1,6 @@
 import copy
+from functools import reduce
+from operator import xor
 
 class Tabuleiro:
 	def __init__ ( self, estado_inicial=[[1,2,3],[4,5,6],[7,8,0]] ):
@@ -45,3 +47,9 @@ class Tabuleiro:
 
 	def __eq__(self,other):
 		return self.estado == other
+
+	def __hash__(self):
+		return hash(frozenset(sum(self.estado, [])))
+
+	def __ne__(self, other):
+		return (self.estado != other.estado)
