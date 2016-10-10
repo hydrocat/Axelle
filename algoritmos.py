@@ -1,54 +1,40 @@
 import sys
 import collections
 from tabuleiro import *
-try:
-	from Queue import PriorityQueue
-except ImportError:
-	from queue import PriorityQueue
+from fila import *
 
 
 def busca_estrela( heuristica, tabuleiro ):
-	estado_final = (heuristica(Tabuleiro()),Tabuleiro())
-	encontrou = False
-
-	chaves = [ 'custo', 'tabuleiro' ]
 	candidatos = PriorityQueue()
 	candidatos.put((heuristica(tabuleiro), tabuleiro), 0)
 	pai = {}
-	custo_ate = {}
-	custo_ate[(heuristica(tabuleiro), tabuleiro)] = heuristica(tabuleiro)
 	pai[(heuristica(tabuleiro), tabuleiro)] = [None, 0]
+	passados = {}
+	passados[(heuristica(tabuleiro), tabuleiro)] = 0
 
+	no_final = None
+	estado_final = (heuristica(Tabuleiro()),Tabuleiro())
 
-	candidatos_passados = PriorityQueue()
-
-	iteracao = 0
-
+	tick = 0
 	while not candidatos.empty():
 		candidato = candidatos.get()
 
-		print(candidato)
-
 		if candidato == estado_final:
+			no_final = candidato
 			break
 
-		print(candidato)
 		novos_candidatos = [(heuristica(filho), filho) for filho in candidato[1].filhos()]
 		for novo_candidato in novos_candidatos:
-			novo_custo = custo_ate[candidato] + novo_candidato[0] + iteracao
-			if (novo_candidato not in custo_ate or novo_custo < custo_ate[novo_candidato]) and candidato != novo_candidato:
-				if novo_candidato in custo_ate:
-					print(str.format("novo: {0} - velho: {1}", novo_custo, custo_ate[novo_candidato]))
-				custo_ate[novo_candidato] = novo_custo
-				# prioridade = novo_custo + heuristica(novo_candidato[1])
-				prioridade = novo_custo + pai[candidato][1] 
+			novo_custo = pai[candidato][1] + novo_candidato[0]
+			if novo_candidato not in passados:
+				passados[novo_candidato] = novo_custo
+				prioridade = passados[novo_candidato]
 				candidatos.put(novo_candidato, prioridade)
 				pai[novo_candidato] = [candidato, pai[candidato][1] + 1]
 
-		iteracao+=1
-	
-	return iteracao
-	# return iteracao, pai, custo_ate
+		tick += 1
+
+	return tick, pai, passados, no_final
 
 
 """
@@ -76,8 +62,6 @@ def busca_gulosa( heuristica, tabuleiro ):
 			for c in novos_candidatos:
 				if c not in passados and c != candidato:
 					candidatos.append(c)
-
-
 
 		#print( "candidato: {}\nlen(candidatos):{}\niteracao:{}\nlen(novos_candidatos):{}\nlen(passados){}".format(candidato,len(candidatos),iteracao,len(novos_candidatos), len(passados)) )
 		#exec(input())

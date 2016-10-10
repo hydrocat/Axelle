@@ -14,12 +14,11 @@ def distancia_manhattan( tabuleiro ):
 	tabuleiro_inicial = sum(tabuleiro.estado,[])
 	distancia = 0
 	for i in tabuleiro_inicial:
-		if i == 0: 
-			continue
-		indice_inicial = tabuleiro_inicial.index(i)
-		indice_final = tabuleiro_final.index(i)
-		if( indice_inicial != indice_final ):
-			vetor_inicial = ( int(indice_inicial/3), indice_inicial%3 )
-			vetor_final = ( int(indice_final/3), indice_final%3 )
-			distancia += abs( vetor_final[0]-vetor_inicial[0]+vetor_final[1]-vetor_inicial[1])
+		if i != 0: 
+			indice_inicial = tabuleiro_inicial.index(i)
+			indice_final = tabuleiro_final.index(i)
+			if( indice_inicial != indice_final ):
+				vetor_inicial = ( int(indice_inicial/3), indice_inicial%3 )
+				vetor_final = ( int(indice_final/3), indice_final%3 )
+				distancia += abs(vetor_final[0] - vetor_inicial[0]) + abs(vetor_final[1] - vetor_inicial[1])
 	return distancia
