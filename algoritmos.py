@@ -121,9 +121,8 @@ def busca_profundidade( tabuleiro ):
 	while not encontrou:
 		candidato = candidatos.pop()
 
-		print(candidato)
-
 		if candidato == estado_final:
+			encontrou = True
 			no_final = candidato
 			break
 		

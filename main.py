@@ -23,6 +23,10 @@ def main():
 	except getopt.GetoptError:
 		usage()
 	
+	if len(opts) == 0:
+		usage()
+		sys.exit(2)
+	
 	for opt, arg in opts:
 		if opt in ('-a', '--algoritmo'):
 			try:
@@ -47,21 +51,10 @@ def main():
 				usage()
 				sys.exit(2)
 
-			for i in range(0,len(lista)):
-				l1 = []
-				l2 = []
-				l3 = []
-				if i/3 == 0:
-					l1.append(lista[i])
-				elif i/3 == 1:
-					l2.append(lista[i])
-				elif i/3 == 2:
-					l3.append(lista[i])
+			tbl.append(lista[0:3])
+			tbl.append(lista[3:6])
+			tbl.append(lista[6:9])
 
-				tbl.append(l1)
-				tbl.append(l2)
-				tbl.append(l3)
-	
 	t = Tabuleiro(tbl)
 	if heuristica != None:
 		ticks, pai, passados, no_final = algoritmo(heuristica, t)
@@ -72,7 +65,7 @@ def main():
 	if heuristica != None:	
 		print(str.format("nivel: {0}", pai[no_final][1]))
 	else:
-		print(str.format("nivel: {0}", passado[no_final][1]))
+		print(str.format("nivel: {0}", passados[no_final][1]))
 	print(str.format("nos_totais: {0}", len(passados)))
 	print("")
 
