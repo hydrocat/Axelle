@@ -55,8 +55,8 @@ class test_algoritmo( unittest.TestCase ):
         self.tb_test = Tabuleiro([[0,8,3],[5,1,6],[4,7,2]])
 
     def test_gulosa(self):
-       iteracoes =  busca_gulosa(pecas_fora_lugar, self.tb_test) 
-       self.assertEqual(iteracoes,640)
+       iteracoes, pai, passado, final =  busca_gulosa(pecas_fora_lugar, self.tb_test) 
+       self.assertEqual(iteracoes,641)
 
 
 if __name__ == '__main__':
